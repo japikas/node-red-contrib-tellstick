@@ -1,0 +1,26 @@
+{
+  "name": "node-red-contrib-tellstick",
+  "version": "0.0.1",
+  "description": "A Node-RED input node for TellStick Duo.",
+  "dependencies": {},
+  "license": "Apache",
+  "keywords": [
+    "node-red",
+    "tellstick"
+  ],
+  "node-red": {
+    "nodes": {
+      "tellstick": "tellstick.js"
+    }
+  },
+  "author": {
+    "name": "Jaakko Ala-Paavola",
+    "email": "jap@iki.fi",
+    "url": "http://ala-paavola.fi/Node-RED/"
+  },
+  "readme": "node-red-contrib-tellstick\n====================\n\nNode-RED input node for TellStick Duo.",
+  "readmeFilename": "README.md",
+  "_id": "node-red-contrib-tellstick@0.0.1",
+  "_from": "node-red-contrib-tellstick@",
+  "_resolved": "https://registry.npmjs.org/node-red-contrib-tellstick/-/node-red-contrib-tellstick-0.0.1.tgz"
+}
