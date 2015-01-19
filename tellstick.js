@@ -15,48 +15,39 @@
  **/
 
 var net = require('net');
+var TelldusEvents = require('tellsock').TelldusEvents;
 var node= {};
 
 module.exports = function(RED) {
     "use strict";
     function TellstickNode(n) {
-        RED.nodes.createNode(this,n);
+        RED.nodes.createNode(this, n);
         node = this;
-	node.socket = n.socket;
+	    node.socket = n.socket;
+	    node.lastEvent = false;
 
-	var telldus = net.createConnection(n.socket);
-	telldus.setEncoding('utf-8');
-	
-	telldus.on('connect', function() {
-	    node.status({fill:"green", shape:"dot",text:"connected"});
-	});
-	
-	telldus.on('close', function() {
-	    node.status({fill:"red", shape:"ring",text:"disconnected"});
-	});
-	    
-	telldus.on('error',function() {
-	    node.status({fill:"red", shape:"ring",text:"disconnected"});
-	});
-	
-	telldus.on('data', function(data) {
-	    var pos = data.indexOf("TDRawDeviceEvent");
-	    if (pos > -1)
-	    {
-		var msg={}, event={}, keyval=[];
-		var arr = data.substr(data.indexOf(":",pos)+1).split(";");
-		for (var i=0; i<arr.length; i++) {
-		    keyval[i] = arr[i].split(":");
-		    event[keyval[i][0]] = keyval[i][1];
-		}
-		msg.payload = event;
-		msg.socket = node.socket;
-		node.send(msg);
-	    }
-	});
+	   var telldus = new TelldusEvents({eventSocket: n.socket});
+
+        telldus.on('connect', function() {
+            node.status({fill:"green", shape:"dot",text:"connected"});
+        });
+
+        telldus.on('close', function() {
+            node.status({fill:"red", shape:"ring",text:"disconnected"});
+        });
+
+        telldus.on('error',function() {
+            node.status({fill:"red", shape:"ring",text:"disconnected"});
+        });
+
+	   telldus.on('raw', function(data) {
+            var msg={};
+            msg.payload = data;
+            msg.socket = node.socket;
+            node.send(msg);
+        });
     }
+
     RED.nodes.registerType("tellstick",TellstickNode);
-}
-
-
+};
 
