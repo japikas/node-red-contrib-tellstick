@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A Node-RED input node for TellStick Duo.",
   "dependencies": {
-    "tellsock": "^0.0.2"
+    "tellsock": "^0.1.2"
   },
   "license": "Apache",
   "keywords": [
